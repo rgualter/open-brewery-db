@@ -26,6 +26,7 @@ pip-selfcheck.json
 *anotacoes
 *.sqlite
 *.txt
+*.parquet
 aaa.py
 
 ### others ###
