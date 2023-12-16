@@ -25,6 +25,7 @@ pip-selfcheck.json
 *.csv
 *anotacoes
 *.sqlite
+*.txt
 aaa.py
 
 ### others ###
