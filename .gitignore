@@ -17,6 +17,7 @@
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+logs
 
 
 ### data files ###
