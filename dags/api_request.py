@@ -107,7 +107,4 @@ def get_api_request():
 
 if __name__ == "__main__":
     get_api_request()
-#responses = get_responses()
-#s3_bucket_name = "open-brewerie-db"
-#json_string = convert_responses_to_flat_list(responses)
-#upload_json_to_s3(json_string, s3_bucket_name)
+
