@@ -62,4 +62,4 @@ silver_to_gold_task = SparkSubmitOperator(
     dag=dag
 )
 
-silver_to_gold_task
+ingest_api_to_s3 >> raw_to_silver_task >> silver_to_gold_task
