@@ -63,7 +63,7 @@ Now, you can see my effort to make the dag work lol.
 
 ![alt text](/images/airflow_dag.png)
 
-And finally, check the S3 bucket if our partitioned data is in the right place.
+And finally, check the S3 bucket with all layers.
 
 ![alt text](/images/aws_raw.png)
 ![alt text](/images/aws_silver.png)
