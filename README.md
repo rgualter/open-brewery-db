@@ -81,7 +81,8 @@ If you need to make changes or shut down:
 - [Spark by examples](https://sparkbyexamples.com/pyspark-tutorial/)
 - [Spark s3 integration](https://spark.apache.org/docs/latest/cloud-integration.html)
 - [Airflow and Spark with Docker](https://medium.com/data-arena/building-a-spark-and-airflow-development-environment-with-docker-f0b9b625edd8)
-- [Working with data files from S3 in your local pySpark environment] (https://blog.revolve.team/2023/05/02/data-files-from-s3-in-local-pyspark-environment/)
+- [Working with data files from S3 in your local pySpark environment](https://medium.com/data-arena/building-a-spark-and-airflow-development-environment-with-docker-f0b9b625edd8)
+
 ## License
 
 This project is licensed under the terms of the **MIT** license.
