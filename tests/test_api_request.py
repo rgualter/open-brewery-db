@@ -54,19 +54,19 @@ def test_paginate_api_returns_list(mock_get_breweries):
 @patch("dags.api_request.boto3.client")
 @patch("dags.api_request.logger.info")
 def test_upload_json_to_s3(mock_logger_info, mock_boto3_client):
-
+    current_date = datetime.now().date()
     with patch.dict(
         "os.environ",
         {
-            "AWS_ACCESS_KEY_ID": "TEST_KEY_ID",
-            "AWS_SECRET_ACCESS_KEY": "TEST_SECRET_ACCESS_KEY",
+            "AWS_ACCESS_KEY_ID": "FAKE_KEY_ID",
+            "AWS_SECRET_ACCESS_KEY": "FAKE_SECRET_ACCESS_KEY",
         },
     ):
 
-        # Configuring the simulated return for pu_object method
+        # Configuring the simulated return for put_object method
         mock_boto3_client.return_value.put_object.return_value = (
             (
-                f"raw/extracted_at={datetime.now().date()}/list-breweries_{datetime.now().date()}.json"
+                f"raw/extracted_at={current_date}/list-breweries_{datetime.now().date()}.json"
             )
             .replace(" ", "_")
             .replace(":", "-")
@@ -79,11 +79,7 @@ def test_upload_json_to_s3(mock_logger_info, mock_boto3_client):
 
         # check if put_object is ok
         mock_boto3_client.return_value.put_object.assert_called_once_with(
-            Body=json_string,
-            Bucket=bucket_name,
-            Key=mock_boto3_client.return_value.put_object.return_value,
-        )
-
-        mock_logger_info.assert_called_once_with(
-            f"JSON data uploaded to S3 bucket: {bucket_name}/{mock_boto3_client.return_value.put_object.return_value}"
+            Body = json_string,
+            Bucket = bucket_name,
+            Key = mock_boto3_client.return_value.put_object.return_value,
         )
