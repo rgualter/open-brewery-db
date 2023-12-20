@@ -2,7 +2,6 @@ import pytest
 from unittest.mock import patch, MagicMock
 from dags.api_request import get_meta, get_breweries, paginate_api, upload_json_to_s3
 import requests
-import os
 from datetime import datetime
 
 
