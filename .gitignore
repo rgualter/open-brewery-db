@@ -24,11 +24,10 @@ logs
 
 *.json
 *.csv
-*anotacoes
 *.sqlite
 *.txt
 *.parquet
-aaa.py
+*.coverage
 
 ### others ###
 

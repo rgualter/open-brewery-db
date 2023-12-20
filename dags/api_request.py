@@ -90,7 +90,7 @@ def upload_json_to_s3(json_string, bucket_name):
                       )
     object_key = (
         (
-            f"raw/extracted_at={datetime.now().date()}/list-breweries_{datetime.now()}.json"
+            f"raw/extracted_at={datetime.now().date()}/list-breweries_{datetime.now().date()}.json"
         )
         .replace(" ", "_")
         .replace(":", "-")
