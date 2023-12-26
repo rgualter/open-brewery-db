@@ -107,4 +107,3 @@ def get_api_request():
 
 if __name__ == "__main__":
     get_api_request()
-
