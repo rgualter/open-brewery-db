@@ -37,6 +37,9 @@ def get_breweries(payload):
 
 
 def paginate_api(total, per_page):
+    if total in (0, None) or per_page in (0, None):
+        raise ValueError("Total and per_page cannot be zero or None.")
+    
     total_pages = math.ceil(total / per_page)
     responses = []
 

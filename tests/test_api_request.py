@@ -40,11 +40,11 @@ def test_get_meta_success(mock_requests_get):
     assert actual.status_code == 200
 
 
-@patch("dags.api_request.get_breweries")
-def test_paginate_api_returns_list(mock_get_breweries):
-    mock_response = MagicMock()
-    mock_response.raise_for_status.return_value = None
-    mock_get_breweries.return_value = mock_response
+#@patch("dags.api_request.get_breweries")
+def test_paginate_api_returns_list(): #mock_get_breweries
+    #mock_response = MagicMock()
+    #mock_response.raise_for_status.return_value = None
+    #mock_get_breweries.return_value = mock_response
 
     actual = paginate_api(100, 10)
     assert isinstance(actual, list)
@@ -82,3 +82,43 @@ def test_upload_json_to_s3(mock_logger_info, mock_boto3_client):
             Bucket = bucket_name,
             Key = mock_boto3_client.return_value.put_object.return_value,
         )
+
+
+
+# Mocking the get_breweries function and the logger
+@pytest.fixture
+def mock_dependencies():
+    with patch('dags.api_request.get_breweries') as mock_breweries, \
+         patch('dags.api_request.logger') as mock_logger:
+        yield mock_breweries, mock_logger
+
+@pytest.mark.parametrize("total, per_page, expected_num_requests, test_id", [
+    (50, 10, 5, 'happy_path_50_items_10_per_page'),
+    (45, 15, 3, 'happy_path_45_items_15_per_page'),
+    (1, 1, 1, 'edge_case_single_item'),
+    (0, 10, 0, 'edge_case_no_items'),
+    (100, 25, 4, 'happy_path_100_items_25_per_page'),
+    (30, 40, 1, 'edge_case_less_items_than_per_page'),
+    (50, -10, 0, 'error_case_negative_per_page'),
+    (None, 10, 0, 'error_case_none_total'),
+    (50, None, 0, 'error_case_none_per_page'),
+    (50, 0, 0, 'error_case_zero_per_page'),
+])
+def test_paginate_api(mock_dependencies, total, per_page, expected_num_requests, test_id):
+    mock_get_breweries, mock_logger = mock_dependencies
+    mock_response = MagicMock()
+    mock_response.raise_for_status = MagicMock()
+    mock_get_breweries.return_value = mock_response
+
+    if total in (0, None) or per_page in (0, None):
+        with pytest.raises(ValueError):
+            paginate_api(total, per_page)
+    else:
+        responses = paginate_api(total, per_page)
+        assert len(responses) == expected_num_requests
+        assert mock_get_breweries.call_count == expected_num_requests
+        if total and per_page and per_page > 0:
+            mock_response.raise_for_status.assert_called()
+        else:
+            mock_response.raise_for_status.assert_not_called()
+
