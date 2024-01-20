@@ -72,7 +72,7 @@ x-airflow-common:
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
-    _PIP_ADDITIONAL_REQUIREMENTS: requests requests-cache pandas ipython botocore boto3 pytest python-dotenv pyspark apache-airflow-providers-apache-spark apache-airflow apache-airflow-providers-amazon apache-airflow-providers-ftp apache-airflow-providers-http apache-airflow-providers-imap apache-airflow-providers-sqlite #${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    _PIP_ADDITIONAL_REQUIREMENTS: requests requests-cache pandas ipython botocore boto3 pytest python-dotenv pyspark apache-airflow-providers-apache-spark apache-airflow apache-airflow-providers-amazon apache-airflow-providers-ftp apache-airflow-providers-http apache-airflow-providers-imap apache-airflow-providers-sqlite  delta-spark #${_PIP_ADDITIONAL_REQUIREMENTS:-}
   volumes:
     #- ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     #- ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs

@@ -29,6 +29,11 @@ logs
 *.parquet
 *.coverage
 
+
+
+### folders ###
+
+
 ### others ###
 
 .vscode
