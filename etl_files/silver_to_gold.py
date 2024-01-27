@@ -38,6 +38,7 @@ def write_parquet_to_gold_s3(df, bucket_name, object_key):
 def write_delta_to_gold_s3(df, bucket_name, object_key):
     file_path = f"s3a://{bucket_name}/{object_key}/aggregated-breweries.delta"
     df.write.format("delta").mode("overwrite").save(file_path)
+    
     logger.info(f"Writing DataFrame to Delta: {file_path}")
     logger.info("DataFrame written to Delta successfully")
 
@@ -64,7 +65,6 @@ if __name__ == "__main__":
     .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")\
     .getOrCreate()
 
-#    
 # .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
 # .config("spark.hadoop.delta.enableFastS3AListFrom", "true") \
 
