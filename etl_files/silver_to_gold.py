@@ -20,6 +20,16 @@ def read_parquet_from_s3(spark, bucket_name, object_key):
     logger.info("Parquet file read successfully")
     return df
 
+def read_delta_from_silver_s3(spark):
+    bucket_name = "open-brewerie-db"
+    object_key = "silver"
+    file_path = f"s3a://{bucket_name}/{object_key}/list-breweries"
+    logger.info(f"Reading Delta file from: {file_path}")
+    df = spark.read.format("delta").load(file_path)
+    #df = spark.read.format("delta").option("versionAsOf", 1).load(file_path)
+    logger.info("Delta file read successfully")
+    return df
+
 def create_aggregate_view(df):
     logger.info("Counting IDs grouped by brewery_type and country")
     count_df = df.groupBy("brewery_type", "country").agg(count("id").alias("count_id"))
@@ -48,7 +58,7 @@ def process_silver_to_gold(spark, bucket_name, silver_object_key, gold_object_ke
     write_parquet_to_gold_s3(aggregated_df, bucket_name, gold_object_key)
 
 def process_silver_to_gold_delta(spark, bucket_name, silver_object_key, gold_object_key):
-    df = read_parquet_from_s3(spark, bucket_name, silver_object_key)
+    df = read_delta_from_silver_s3(spark)
     aggregated_df = create_aggregate_view(df)
     write_delta_to_gold_s3(aggregated_df, bucket_name, gold_object_key)
 
@@ -70,6 +80,6 @@ if __name__ == "__main__":
 
     bucket_name = "open-brewerie-db"
     silver_object_key = f"silver/extracted_at={datetime.now().date()}"
-    gold_object_key = f"gold/extracted_at={datetime.now().date()}"
+    gold_object_key = "gold"
 
     process_silver_to_gold_delta(spark, bucket_name, silver_object_key, gold_object_key)
