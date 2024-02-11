@@ -80,6 +80,9 @@ x-airflow-common:
     #- ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     #- ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     #- ${AIRFLOW_PROJ_DIR:-.}/etl_files:/opt/airflow/etl_files
+    #- ${AIRFLOW_PROJ_DIR:-.}/spark:/opt/airflow/spark
+    #- ${AIRFLOW_PROJ_DIR:-.}/spark/jars:/opt/airflow/spark/jars
+
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./config:/opt/airflow/config

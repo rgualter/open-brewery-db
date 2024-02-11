@@ -99,7 +99,7 @@ def upload_json_to_s3(json_string, bucket_name):
         .replace(":", "-")
     )
 
-    s3.put_object(Body=json_string, Bucket=bucket_name, Key=object_key)
+    s3.put_object(Body=json_string, Bucket=bucket_name, Key=object_key, ACL="bucket-owner-full-control")
     logger.info(f"JSON data uploaded to S3 bucket: {bucket_name}/{object_key}")
 
 def get_api_request():

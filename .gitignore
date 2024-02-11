@@ -32,8 +32,8 @@ logs
 
 
 ### folders ###
-
-
+legacy
+spark-warehouse
 ### others ###
 
 .vscode
