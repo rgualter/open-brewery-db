@@ -34,6 +34,7 @@ logs
 ### folders ###
 legacy
 spark-warehouse
+tests
 ### others ###
 
 .vscode

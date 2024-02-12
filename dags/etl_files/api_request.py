@@ -6,7 +6,6 @@ import requests
 import requests_cache
 import boto3
 import datetime
-import dotenv
 import os
 from datetime import datetime
 from IPython.display import clear_output

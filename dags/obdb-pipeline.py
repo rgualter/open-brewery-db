@@ -3,10 +3,8 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 from airflow.utils.dates import days_ago
 from datetime import datetime, timedelta
-from api_request import get_api_request
+from etl_files.api_request import get_api_request
 from delta import *
-
-#https://copyprogramming.com/howto/apache-airflow-dag-cannot-import-local-module
 
 ARGS = {
     "owner": "ricardogualter",
@@ -44,7 +42,7 @@ SPARK_CONF = {
 
 raw_to_bronze_task = SparkSubmitOperator(
     task_id="raw_to_bronze_task",
-    application="/opt/airflow/etl_files/raw_to_bronze.py",
+    application="/opt/airflow/dags/etl_files/raw_to_bronze.py",
     conn_id="spark_default",
     conf=SPARK_CONF,
     dag=dag,
@@ -52,7 +50,7 @@ raw_to_bronze_task = SparkSubmitOperator(
 
 bronze_to_silver_task = SparkSubmitOperator(
     task_id="bronze_to_silver_task",
-    application="/opt/airflow/etl_files/bronze_to_silver.py",
+    application="/opt/airflow/dags/etl_files/bronze_to_silver.py",
     conn_id="spark_default",
     conf=SPARK_CONF,
     dag=dag,
@@ -60,7 +58,7 @@ bronze_to_silver_task = SparkSubmitOperator(
 
 silver_to_gold_task = SparkSubmitOperator(
     task_id="silver_to_gold_task",
-    application="/opt/airflow/etl_files/silver_to_gold.py",
+    application="/opt/airflow/dags/etl_files/silver_to_gold.py",
     conn_id="spark_default",
     conf=SPARK_CONF,
     dag=dag
